@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>presentation.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="%F0%9F%8C%B1-farmlink-%EC%8A%A4%EB%A7%88%ED%8A%B8%ED%8C%9C-iot-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C">🌱 FarmLink 스마트팜 IoT 시스템 발표자료</h1>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-1-%EC%A0%9C%EB%AA%A9-%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C">슬라이드 1: 제목 슬라이드</h2>
+<h1 id="%F0%9F%8C%B1-farmlink">🌱 FarmLink</h1>
+<h2 id="esp8266-%EA%B8%B0%EB%B0%98-%EC%8A%A4%EB%A7%88%ED%8A%B8%ED%8C%9C-iot-%EC%8B%9C%EC%8A%A4%ED%85%9C">ESP8266 기반 스마트팜 IoT 시스템</h2>
+<p><strong>실시간 모니터링 &amp; 자동 제어 솔루션</strong></p>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-2-%EB%B0%9C%ED%91%9C-%EA%B0%9C%EC%9A%94">슬라이드 2: 발표 개요</h2>
+<h3 id="%F0%9F%93%8B-%EB%B0%9C%ED%91%9C-%EB%82%B4%EC%9A%A9">📋 발표 내용</h3>
+<ul>
+<li><strong>프로젝트 소개</strong>: FarmLink 시스템 개요</li>
+<li><strong>시스템 아키텍처</strong>: 전체 구조 및 구성 요소</li>
+<li><strong>하드웨어 설계</strong>: Arduino + ESP8266 기반 센서 시스템</li>
+<li><strong>소프트웨어 개발</strong>: 백엔드 API &amp; 프론트엔드 앱</li>
+<li><strong>데이터베이스</strong>: Supabase 기반 데이터 관리</li>
+<li><strong>데모</strong>: 실제 시스템 동작 시연</li>
+<li><strong>향후 계획</strong>: 확장 및 개선 방향</li>
+</ul>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-3-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%B0%B0%EA%B2%BD">슬라이드 3: 프로젝트 배경</h2>
+<h3 id="%F0%9F%8C%8D-%EC%99%9C-%EC%8A%A4%EB%A7%88%ED%8A%B8%ED%8C%9C%EC%9D%B8%EA%B0%80">🌍 왜 스마트팜인가?</h3>
+<p><strong>전통적 농업의 한계</strong></p>
+<ul>
+<li>❌ 수동적 모니터링으로 인한 비효율성</li>
+<li>❌ 환경 변화에 대한 대응 지연</li>
+<li>❌ 정확한 데이터 부족으로 인한 손실</li>
+</ul>
+<p><strong>스마트팜의 필요성</strong></p>
+<ul>
+<li>✅ 실시간 환경 모니터링</li>
+<li>✅ 자동화된 제어 시스템</li>
+<li>✅ 데이터 기반 의사결정</li>
+</ul>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-4-farmlink-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EA%B0%9C%EC%9A%94">슬라이드 4: FarmLink 시스템 개요</h2>
+<h3 id="%F0%9F%8E%AF-%ED%95%B5%EC%8B%AC-%EA%B0%80%EC%B9%98">🎯 핵심 가치</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph LR
+    A[센서 데이터 수집] --> B[실시간 모니터링]
+    B --> C[자동 제어]
+    C --> D[최적화된 농업 환경]
+</div></code></pre>
+<p><strong>주요 기능</strong></p>
+<ul>
+<li>🌡️ <strong>실시간 모니터링</strong>: 온도, 습도, 토양수분, 조도</li>
+<li>🤖 <strong>자동 제어</strong>: 워터펌프, 팬, LED 자동 제어</li>
+<li>☁️ <strong>클라우드 연동</strong>: Supabase를 통한 데이터 저장</li>
+<li>📱 <strong>크로스 플랫폼</strong>: 웹과 모바일 동시 접근</li>
+</ul>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-5-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98">슬라이드 5: 시스템 아키텍처</h2>
+<h3 id="%F0%9F%8F%97%EF%B8%8F-%EC%A0%84%EC%B2%B4-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EA%B5%AC%EC%A1%B0">🏗️ 전체 시스템 구조</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TB
+    subgraph "하드웨어 계층"
+        A[Arduino UNO] --> B[센서들]
+        A --> C[액추에이터들]
+        A --> D[ESP8266 WiFi]
+    end
+    
+    subgraph "통신 계층"
+        D --> E[WiFi 연결]
+        E --> F[Supabase API]
+    end
+    
+    subgraph "백엔드 계층"
+        F --> G[Express.js 서버]
+        G --> H[Supabase 데이터베이스]
+    end
+    
+    subgraph "프론트엔드 계층"
+        I[Admin Dashboard] --> G
+        J[User App] --> G
+    end
+</div></code></pre>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-6-%ED%95%98%EB%93%9C%EC%9B%A8%EC%96%B4-%EA%B5%AC%EC%84%B1">슬라이드 6: 하드웨어 구성</h2>
+<h3 id="%F0%9F%94%A7-%EB%A9%94%EC%9D%B8-%ED%95%98%EB%93%9C%EC%9B%A8%EC%96%B4">🔧 메인 하드웨어</h3>
+<p><strong>컨트롤러</strong></p>
+<ul>
+<li><strong>Arduino UNO</strong>: 메인 컨트롤러</li>
+<li><strong>ESP8266 WiFi 모듈</strong>: 무선 통신</li>
+</ul>
+<p><strong>센서 시스템</strong></p>
+<ul>
+<li><strong>DHT11</strong>: 온습도 센서 (Pin 4)</li>
+<li><strong>토양수분 센서</strong>: 아날로그 센서 (A0)</li>
+<li><strong>조도 센서 (CDS)</strong>: 아날로그 센서 (A1)</li>
+</ul>
+<p><strong>액추에이터</strong></p>
+<ul>
+<li><strong>워터펌프</strong>: 모터 드라이버 (Pin 9, 10)</li>
+<li><strong>팬</strong>: 모터 드라이버 (Pin 5, 6)</li>
+<li><strong>LED</strong>: PWM 제어 (Pin 3)</li>
+</ul>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-7-%ED%9A%8C%EB%A1%9C%EB%8F%84-%EB%B0%8F-%EC%97%B0%EA%B2%B0">슬라이드 7: 회로도 및 연결</h2>
+<h3 id="%E2%9A%A1-%ED%9A%8C%EB%A1%9C-%EC%84%A4%EA%B3%84">⚡ 회로 설계</h3>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    PWR[5V 전원] --> ARDUINO[Arduino Uno]
+    GND[GND] --> ARDUINO
+    
+    ARDUINO --> DHT11[DHT11 온습도센서]
+    ARDUINO --> SOIL[토양수분센서]
+    ARDUINO --> LIGHT[조도센서]
+    ARDUINO --> LCD[LCD I2C 16x2]
+    ARDUINO --> PUMP[워터펌프]
+    ARDUINO --> FAN[팬]
+    ARDUINO --> LED[LED]
+    ARDUINO --> ESP8266[ESP8266 WiFi 모듈]
+</div></code></pre>
+<p><strong>Pull-up/Pull-down 저항</strong></p>
+<ul>
+<li>DHT11: 4.7kΩ Pull-up</li>
+<li>토양수분/조도센서: 10kΩ Pull-down</li>
+<li>LCD I2C: 4.7kΩ Pull-up</li>
+</ul>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-8-%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98">슬라이드 8: 소프트웨어 아키텍처</h2>
+<h3 id="%F0%9F%92%BB-%EA%B0%9C%EB%B0%9C-%EC%8A%A4%ED%83%9D">💻 개발 스택</h3>
+<p><strong>백엔드</strong></p>
+<ul>
+<li><strong>Node.js + Express.js</strong>: REST API 서버</li>
+<li><strong>Supabase</strong>: PostgreSQL 데이터베이스</li>
+<li><strong>TypeScript</strong>: 타입 안전성</li>
+</ul>
+<p><strong>프론트엔드</strong></p>
+<ul>
+<li><strong>React</strong>: 관리자 대시보드</li>
+<li><strong>React Native</strong>: 사용자 모바일 앱</li>
+</ul>
+<p><strong>하드웨어</strong></p>
+<ul>
+<li><strong>Arduino C++</strong>: 센서 제어 및 데이터 수집</li>
+<li><strong>Python</strong>: 제어 스크립트</li>
+</ul>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-9-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EC%84%A4%EA%B3%84">슬라이드 9: 데이터베이스 설계</h2>
+<h3 id="%F0%9F%97%84%EF%B8%8F-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EA%B5%AC%EC%A1%B0">🗄️ 데이터베이스 구조</h3>
+<pre><code class="language-mermaid"><div class="mermaid">erDiagram
+    devices {
+        varchar id PK "디바이스 ID"
+        varchar name "디바이스 이름"
+        varchar location "위치"
+        varchar status "상태"
+        timestamptz last_seen "마지막 접속"
+    }
+
+    sensor_data {
+        bigserial id PK "센서 데이터 ID"
+        numeric soil_moisture "토양 수분"
+        numeric light_intensity "조도"
+        numeric temperature "온도"
+        numeric humidity "습도"
+        timestamptz timestamp "측정 시간"
+        varchar device_id "디바이스 ID"
+    }
+
+    sensor_threshold_configs {
+        bigserial id PK "설정 ID"
+        varchar device_id "디바이스 ID"
+        varchar config_name "설정 이름"
+        numeric temperature_threshold "온도 임계값"
+        numeric humidity_threshold "습도 임계값"
+        numeric soil_moisture_threshold "토양수분 임계값"
+        numeric light_intensity_threshold "조도 임계값"
+        boolean is_active "활성화 여부"
+    }
+
+    devices ||--o{ sensor_data : "생성"
+    devices ||--o{ sensor_threshold_configs : "설정"
+</div></code></pre>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-10-api-%EC%84%A4%EA%B3%84">슬라이드 10: API 설계</h2>
+<h3 id="%F0%9F%94%8C-rest-api-%EC%97%94%EB%93%9C%ED%8F%AC%EC%9D%B8%ED%8A%B8">🔌 REST API 엔드포인트</h3>
+<p><strong>센서 데이터 API</strong></p>
+<ul>
+<li><code>POST /api/sensor-data</code> - 센서 데이터 저장</li>
+<li><code>GET /api/sensor-data</code> - 센서 데이터 조회</li>
+<li><code>GET /api/sensor-data/stats</code> - 센서 데이터 통계</li>
+</ul>
+<p><strong>디바이스 관리 API</strong></p>
+<ul>
+<li><code>GET /api/devices</code> - 디바이스 목록 조회</li>
+<li><code>GET /api/device-status/:deviceId</code> - 디바이스 상태 조회</li>
+</ul>
+<p><strong>임계치 설정 API</strong></p>
+<ul>
+<li><code>GET /api/threshold-configs/:deviceId</code> - 임계치 설정 조회</li>
+<li><code>POST /api/threshold-configs/:deviceId</code> - 임계치 설정 생성</li>
+<li><code>PUT /api/threshold-configs/:id</code> - 임계치 설정 업데이트</li>
+</ul>
+<p><strong>제어 API</strong></p>
+<ul>
+<li><code>POST /api/control/:deviceId</code> - 디바이스 제어</li>
+</ul>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-11-%EC%9E%90%EB%8F%99-%EC%A0%9C%EC%96%B4-%EB%A1%9C%EC%A7%81">슬라이드 11: 자동 제어 로직</h2>
+<h3 id="%F0%9F%A4%96-%EC%8A%A4%EB%A7%88%ED%8A%B8-%EC%A0%9C%EC%96%B4-%EC%8B%9C%EC%8A%A4%ED%85%9C">🤖 스마트 제어 시스템</h3>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    A[센서 데이터 수집] --> B{임계값 확인}
+    B -->|토양수분 < 20%| C[워터펌프 작동]
+    B -->|온도 > 30°C| D[팬 작동]
+    B -->|습도 > 70%| D
+    B -->|조도 < 60ph| E[LED 켜기]
+    B -->|모든 값 정상| F[대기]
+    
+    C --> G[데이터 전송]
+    D --> G
+    E --> G
+    F --> G
+    G --> H[1초 대기]
+    H --> A
+</div></code></pre>
+<p><strong>임계값 설정</strong></p>
+<ul>
+<li>토양수분: 20% 미만 → 워터펌프 작동</li>
+<li>온도: 30°C 초과 → 팬 작동</li>
+<li>습도: 70% 초과 → 팬 작동</li>
+<li>조도: 60ph 미만 → LED 작동</li>
+</ul>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-12-%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4">슬라이드 12: 사용자 인터페이스</h2>
+<h3 id="%F0%9F%93%B1-%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C-%EA%B5%AC%EC%84%B1">📱 프론트엔드 구성</h3>
+<p><strong>관리자 대시보드 (React)</strong></p>
+<ul>
+<li>📊 실시간 센서 데이터 모니터링</li>
+<li>⚙️ 임계값 설정 및 제어</li>
+<li>📈 데이터 통계 및 차트</li>
+<li>🔧 디바이스 관리</li>
+</ul>
+<p><strong>사용자 앱 (React Native)</strong></p>
+<ul>
+<li>📱 모바일 친화적 UI</li>
+<li>🔄 자동 새로고침 (5초 간격)</li>
+<li>🎨 직관적인 카드 형태 데이터 표시</li>
+<li>📊 센서 상태 색상 표시</li>
+</ul>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-13-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EB%8F%99%EC%9E%91-%ED%9D%90%EB%A6%84">슬라이드 13: 시스템 동작 흐름</h2>
+<h3 id="%F0%9F%94%84-%EC%A0%84%EC%B2%B4-%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4">🔄 전체 프로세스</h3>
+<pre><code class="language-mermaid"><div class="mermaid">sequenceDiagram
+    participant A as Arduino
+    participant S as 센서들
+    participant E as ESP8266
+    participant API as Supabase API
+    participant DB as 데이터베이스
+    participant UI as 사용자 인터페이스
+
+    A->>S: 센서 데이터 읽기
+    S-->>A: 온도, 습도, 토양수분, 조도
+    A->>A: 임계값 확인 및 자동 제어
+    A->>E: 데이터 전송
+    E->>API: WiFi를 통한 HTTP POST
+    API->>DB: 데이터 저장
+    UI->>API: 데이터 조회 요청
+    API-->>UI: 실시간 데이터 응답
+</div></code></pre>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-14-%EA%B8%B0%EC%88%A0%EC%A0%81-%ED%8A%B9%EC%A7%95">슬라이드 14: 기술적 특징</h2>
+<h3 id="%E2%9A%A1-%ED%95%B5%EC%8B%AC-%EA%B8%B0%EC%88%A0">⚡ 핵심 기술</h3>
+<p><strong>하드웨어</strong></p>
+<ul>
+<li>✅ <strong>실시간 센서 모니터링</strong>: 1초 간격 데이터 수집</li>
+<li>✅ <strong>안정적인 통신</strong>: ESP8266 WiFi 모듈</li>
+<li>✅ <strong>자동 제어</strong>: 임계값 기반 스마트 제어</li>
+<li>✅ <strong>현장 모니터링</strong>: LCD 디스플레이</li>
+</ul>
+<p><strong>소프트웨어</strong></p>
+<ul>
+<li>✅ <strong>타입 안전성</strong>: TypeScript 기반 개발</li>
+<li>✅ <strong>확장성</strong>: 모듈화된 구조</li>
+<li>✅ <strong>보안</strong>: Row Level Security (RLS)</li>
+<li>✅ <strong>성능</strong>: 인덱스 최적화</li>
+</ul>
+<p><strong>데이터</strong></p>
+<ul>
+<li>✅ <strong>실시간 저장</strong>: Supabase 클라우드</li>
+<li>✅ <strong>통계 분석</strong>: 집계 함수 활용</li>
+<li>✅ <strong>백업</strong>: 자동 백업 시스템</li>
+</ul>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-15-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%84%B1%EA%B3%BC">슬라이드 15: 프로젝트 성과</h2>
+<h3 id="%F0%9F%8F%86-%EA%B0%9C%EB%B0%9C-%EC%99%84%EB%A3%8C-%ED%95%AD%EB%AA%A9">🏆 개발 완료 항목</h3>
+<p><strong>✅ 하드웨어 개발</strong></p>
+<ul>
+<li>Arduino + ESP8266 기반 센서 시스템</li>
+<li>회로 설계 및 Pull-up/Pull-down 저항 적용</li>
+<li>자동 제어 로직 구현</li>
+</ul>
+<p><strong>✅ 백엔드 개발</strong></p>
+<ul>
+<li>Express.js 기반 REST API 서버</li>
+<li>Supabase 데이터베이스 설계 및 구현</li>
+<li>TypeScript 타입 정의</li>
+</ul>
+<p><strong>✅ 프론트엔드 개발</strong></p>
+<ul>
+<li>React 관리자 대시보드</li>
+<li>React Native 사용자 앱</li>
+</ul>
+<p><strong>✅ 문서화</strong></p>
+<ul>
+<li>상세한 API 문서</li>
+<li>데이터베이스 ERD 및 테이블 정의서</li>
+<li>회로도 및 하드웨어 연결 가이드</li>
+</ul>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-16-%EB%8D%B0%EB%AA%A8-%EC%8B%9C%EC%97%B0">슬라이드 16: 데모 시연</h2>
+<h3 id="%F0%9F%8E%AC-%EC%8B%A4%EC%A0%9C-%EC%8B%9C%EC%8A%A4%ED%85%9C-%EB%8F%99%EC%9E%91">🎬 실제 시스템 동작</h3>
+<p><strong>1. 센서 데이터 수집</strong></p>
+<ul>
+<li>Arduino에서 실시간 센서 데이터 읽기</li>
+<li>LCD에 현재 상태 표시</li>
+</ul>
+<p><strong>2. 자동 제어 동작</strong></p>
+<ul>
+<li>토양수분 부족 시 워터펌프 자동 작동</li>
+<li>온도/습도 초과 시 팬 자동 작동</li>
+<li>조도 부족 시 LED 자동 켜기</li>
+</ul>
+<p><strong>3. 클라우드 연동</strong></p>
+<ul>
+<li>ESP8266을 통한 WiFi 데이터 전송</li>
+<li>Supabase 데이터베이스 저장 확인</li>
+</ul>
+<p><strong>4. 사용자 인터페이스</strong></p>
+<ul>
+<li>웹 대시보드에서 실시간 모니터링</li>
+<li>모바일 앱에서 데이터 확인</li>
+</ul>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-17-%ED%99%95%EC%9E%A5-%EA%B0%80%EB%8A%A5%EC%84%B1">슬라이드 17: 확장 가능성</h2>
+<h3 id="%F0%9F%9A%80-%ED%96%A5%ED%9B%84-%EA%B0%9C%EB%B0%9C-%EA%B3%84%ED%9A%8D">🚀 향후 개발 계획</h3>
+<p><strong>하드웨어 확장</strong></p>
+<ul>
+<li>📷 <strong>카메라 모듈</strong>: 식물 성장 모니터링</li>
+<li>🌡️ <strong>추가 센서</strong>: pH, EC, CO2 센서</li>
+<li>🔋 <strong>배터리 시스템</strong>: 무선 전원 공급</li>
+<li>📡 <strong>LoRa 통신</strong>: 장거리 통신</li>
+</ul>
+<p><strong>소프트웨어 개선</strong></p>
+<ul>
+<li>🤖 <strong>AI 분석</strong>: 머신러닝 기반 예측</li>
+<li>📊 <strong>고급 분석</strong>: 데이터 마이닝 및 패턴 분석</li>
+<li>🔔 <strong>알림 시스템</strong>: 이메일, SMS, 푸시 알림</li>
+<li>👥 <strong>사용자 관리</strong>: 다중 사용자 지원</li>
+</ul>
+<p><strong>플랫폼 확장</strong></p>
+<ul>
+<li>🌐 <strong>웹 대시보드</strong>: 고급 분석 도구</li>
+<li>📱 <strong>모바일 앱</strong>: iOS/Android 네이티브 앱</li>
+<li>🔌 <strong>API 확장</strong>: 서드파티 연동</li>
+</ul>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-18-%EB%B9%84%EC%A6%88%EB%8B%88%EC%8A%A4-%EA%B0%80%EC%B9%98">슬라이드 18: 비즈니스 가치</h2>
+<h3 id="%F0%9F%92%BC-%EC%83%81%EC%97%85%EC%A0%81-%ED%99%9C%EC%9A%A9-%EA%B0%80%EB%8A%A5%EC%84%B1">💼 상업적 활용 가능성</h3>
+<p><strong>농업 현장 적용</strong></p>
+<ul>
+<li>🏭 <strong>대규모 농장</strong>: 자동화된 환경 관리</li>
+<li>🏠 <strong>소규모 농장</strong>: 비용 효율적인 스마트팜</li>
+<li>🌱 <strong>실험실</strong>: 정밀한 환경 제어</li>
+</ul>
+<p><strong>기술적 우위</strong></p>
+<ul>
+<li>⚡ <strong>실시간 모니터링</strong>: 즉각적인 대응</li>
+<li>🤖 <strong>자동 제어</strong>: 인력 비용 절감</li>
+<li>📊 <strong>데이터 기반</strong>: 과학적 의사결정</li>
+<li>🔧 <strong>확장성</strong>: 다양한 환경 적용 가능</li>
+</ul>
+<p><strong>시장 기회</strong></p>
+<ul>
+<li>🌍 <strong>글로벌 시장</strong>: 스마트팜 시장 성장</li>
+<li>🏢 <strong>B2B 솔루션</strong>: 농업 기업 대상</li>
+<li>🏪 <strong>B2C 제품</strong>: 개인 농업인 대상</li>
+</ul>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-19-%EA%B8%B0%EC%88%A0%EC%A0%81-%EB%8F%84%EC%A0%84%EA%B3%BC-%ED%95%B4%EA%B2%B0">슬라이드 19: 기술적 도전과 해결</h2>
+<h3 id="%F0%9F%94%A7-%EA%B0%9C%EB%B0%9C-%EA%B3%BC%EC%A0%95%EC%97%90%EC%84%9C%EC%9D%98-%EB%8F%84%EC%A0%84">🔧 개발 과정에서의 도전</h3>
+<p><strong>하드웨어 도전</strong></p>
+<ul>
+<li>
+<p>❌ <strong>전압 레벨 불일치</strong>: ESP8266 3.3V vs Arduino 5V</p>
+</li>
+<li>
+<p>✅ <strong>해결</strong>: 전압 분압기 및 레귤레이터 사용</p>
+</li>
+<li>
+<p>❌ <strong>신호 안정성</strong>: 센서 노이즈 및 플로팅</p>
+</li>
+<li>
+<p>✅ <strong>해결</strong>: Pull-up/Pull-down 저항 적용</p>
+</li>
+</ul>
+<p><strong>소프트웨어 도전</strong></p>
+<ul>
+<li>
+<p>❌ <strong>데이터 동기화</strong>: 실시간 데이터 전송</p>
+</li>
+<li>
+<p>✅ <strong>해결</strong>: 5초 간격 배치 전송 및 오류 처리</p>
+</li>
+<li>
+<p>❌ <strong>타입 안전성</strong>: JavaScript 동적 타입</p>
+</li>
+<li>
+<p>✅ <strong>해결</strong>: TypeScript 도입 및 엄격한 타입 정의</p>
+</li>
+</ul>
+<p><strong>통신 도전</strong></p>
+<ul>
+<li>❌ <strong>WiFi 연결 불안정</strong>: 네트워크 끊김</li>
+<li>✅ <strong>해결</strong>: 재연결 로직 및 USB 백업 시스템</li>
+</ul>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-20-%EA%B2%B0%EB%A1%A0-%EB%B0%8F-%ED%96%A5%ED%9B%84-%EA%B3%84%ED%9A%8D">슬라이드 20: 결론 및 향후 계획</h2>
+<h3 id="%F0%9F%8E%AF-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%84%B1%EA%B3%BC">🎯 프로젝트 성과</h3>
+<p><strong>✅ 달성한 목표</strong></p>
+<ul>
+<li>실시간 센서 모니터링 시스템 구축</li>
+<li>자동 제어 로직 구현</li>
+<li>클라우드 기반 데이터 관리</li>
+<li>사용자 친화적 인터페이스 개발</li>
+</ul>
+<p><strong>🚀 향후 계획</strong></p>
+<ul>
+<li>하드웨어 안정성 개선</li>
+<li>AI 기반 예측 시스템 도입</li>
+<li>상용화를 위한 제품화</li>
+<li>국내외 농업 현장 적용</li>
+</ul>
+<p><strong>💡 핵심 가치</strong></p>
+<ul>
+<li><strong>혁신</strong>: IoT 기술을 활용한 농업 혁신</li>
+<li><strong>효율성</strong>: 자동화를 통한 생산성 향상</li>
+<li><strong>지속가능성</strong>: 데이터 기반 지속가능한 농업</li>
+<li><strong>접근성</strong>: 누구나 사용할 수 있는 스마트팜</li>
+</ul>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-21-qa">슬라이드 21: Q&amp;A</h2>
+<h3 id="%E2%9D%93-%EC%A7%88%EB%AC%B8%EA%B3%BC-%EB%8B%B5%EB%B3%80">❓ 질문과 답변</h3>
+<p><strong>자주 묻는 질문</strong></p>
+<p><strong>Q: 시스템의 전력 소비는 어느 정도인가요?</strong>
+A: Arduino UNO + ESP8266 기준 약 200mA, 5V 전원으로 동작합니다.</p>
+<p><strong>Q: 센서 데이터는 얼마나 자주 수집되나요?</strong>
+A: 1초마다 센서 데이터를 읽고, 5초마다 클라우드에 전송합니다.</p>
+<p><strong>Q: WiFi 연결이 끊어지면 어떻게 되나요?</strong>
+A: USB 백업 시스템이 있어 로컬에서 데이터를 수집하고 저장할 수 있습니다.</p>
+<p><strong>Q: 다른 센서를 추가할 수 있나요?</strong>
+A: 네, 모듈화된 구조로 새로운 센서 추가가 용이합니다.</p>
+<hr>
+<h2 id="%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C-22-%EA%B0%90%EC%82%AC%ED%95%A9%EB%8B%88%EB%8B%A4">슬라이드 22: 감사합니다</h2>
+<h3 id="%F0%9F%99%8F-thank-you">🙏 Thank You</h3>
+<h1 id="%F0%9F%8C%B1-farmlink">🌱 FarmLink</h1>
+<h2 id="esp8266-%EA%B8%B0%EB%B0%98-%EC%8A%A4%EB%A7%88%ED%8A%B8%ED%8C%9C-iot-%EC%8B%9C%EC%8A%A4%ED%85%9C">ESP8266 기반 스마트팜 IoT 시스템</h2>
+<p><strong>실시간 모니터링 &amp; 자동 제어 솔루션</strong></p>
+<hr>
+<p><strong>문의사항이나 추가 정보가 필요하시면 언제든 연락주세요!</strong></p>
+<p>📧 Email: your-email@example.com<br>
+🌐 GitHub: https://github.com/your-repo/farmlink<br>
+📚 문서: <a href="docs/">프로젝트 문서</a></p>
+<hr>
+<div align="center">
+<p><strong>🌱 스마트한 농업의 미래를 함께 만들어가요! 🌱</strong></p>
+</div>
+
+</body>
+</html>

@@ -11,9 +11,9 @@ export interface Database {
           light_intensity: number
           temperature: number
           humidity: number
-          timestamp: string
-          device_id: string
-          created_at: string
+          timestamp: string | null
+          device_id: string | null
+          created_at: string | null
         }
         Insert: {
           id?: number
@@ -21,9 +21,9 @@ export interface Database {
           light_intensity: number
           temperature: number
           humidity: number
-          timestamp?: string
-          device_id?: string
-          created_at?: string
+          timestamp?: string | null
+          device_id?: string | null
+          created_at?: string | null
         }
         Update: {
           id?: number
@@ -31,9 +31,9 @@ export interface Database {
           light_intensity?: number
           temperature?: number
           humidity?: number
-          timestamp?: string
-          device_id?: string
-          created_at?: string
+          timestamp?: string | null
+          device_id?: string | null
+          created_at?: string | null
         }
       }
       devices: {
@@ -41,83 +41,69 @@ export interface Database {
           id: string
           name: string
           location: string | null
-          status: string
+          status: string | null
           last_seen: string | null
-          created_at: string
-          updated_at: string
+          created_at: string | null
+          updated_at: string | null
         }
         Insert: {
           id: string
           name: string
           location?: string | null
-          status?: string
+          status?: string | null
           last_seen?: string | null
-          created_at?: string
-          updated_at?: string
+          created_at?: string | null
+          updated_at?: string | null
         }
         Update: {
           id?: string
           name?: string
           location?: string | null
-          status?: string
+          status?: string | null
           last_seen?: string | null
-          created_at?: string
-          updated_at?: string
+          created_at?: string | null
+          updated_at?: string | null
         }
       }
-      notifications: {
+      sensor_threshold_configs: {
         Row: {
           id: number
           device_id: string
-          notification_type: string
-          threshold_value: number
-          is_enabled: boolean
-          created_at: string
+          config_name: string
+          temperature_threshold: number | null
+          humidity_threshold: number | null
+          soil_moisture_threshold: number | null
+          light_intensity_threshold: number | null
+          is_active: boolean | null
+          created_at: string | null
+          updated_at: string | null
+          created_by: string | null
         }
         Insert: {
           id?: number
           device_id: string
-          notification_type: string
-          threshold_value: number
-          is_enabled?: boolean
-          created_at?: string
+          config_name: string
+          temperature_threshold?: number | null
+          humidity_threshold?: number | null
+          soil_moisture_threshold?: number | null
+          light_intensity_threshold?: number | null
+          is_active?: boolean | null
+          created_at?: string | null
+          updated_at?: string | null
+          created_by?: string | null
         }
         Update: {
           id?: number
           device_id?: string
-          notification_type?: string
-          threshold_value?: number
-          is_enabled?: boolean
-          created_at?: string
-        }
-      }
-      control_logs: {
-        Row: {
-          id: number
-          device_id: string
-          action: string
-          duration: number | null
-          triggered_by: string | null
-          sensor_data_id: number | null
-          created_at: string
-        }
-        Insert: {
-          id?: number
-          device_id: string
-          action: string
-          duration?: number | null
-          triggered_by?: string | null
-          sensor_data_id?: number | null
-          created_at?: string
-        }
-        Update: {
-          id?: number
-          device_id?: string
-          action?: string
-          duration?: number | null
-          triggered_by?: string | null
-          sensor_data_id?: number | null
-          created_at?: string
+          config_name?: string
+          temperature_threshold?: number | null
+          humidity_threshold?: number | null
+          soil_moisture_threshold?: number | null
+          light_intensity_threshold?: number | null
+          is_active?: boolean | null
+          created_at?: string | null
+          updated_at?: string | null
+          created_by?: string | null
         }
       }
     }

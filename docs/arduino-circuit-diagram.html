@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>arduino-circuit-diagram.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="farmlink-esp8266-%EC%8A%A4%EB%A7%88%ED%8A%B8%ED%8C%9C-%EC%8B%9C%EC%8A%A4%ED%85%9C-%ED%9A%8C%EB%A1%9C%EB%8F%84">FarmLink ESP8266 스마트팜 시스템 회로도</h1>
+<h2 id="%EC%8B%9C%EC%8A%A4%ED%85%9C-%EA%B0%9C%EC%9A%94">시스템 개요</h2>
+<p>ESP8266 기반 스마트팜 모니터링 및 자동 제어 시스템의 회로 연결도를 Mermaid 다이어그램으로 표현합니다.</p>
+<h2 id="%ED%9A%8C%EB%A1%9C%EB%8F%84-mermaid">회로도 (Mermaid)</h2>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    %% 전원 공급
+    PWR[5V 전원] --> ARDUINO[Arduino Uno]
+    GND[GND] --> ARDUINO
+    
+    %% 센서 연결
+    ARDUINO --> DHT11[DHT11 온습도센서]
+    DHT11 --> |Pin 4| ARDUINO
+    
+    ARDUINO --> SOIL[토양수분센서]
+    SOIL --> |A0| ARDUINO
+    
+    ARDUINO --> LIGHT[조도센서]
+    LIGHT --> |A1| ARDUINO
+    
+    %% 디스플레이
+    ARDUINO --> LCD[LCD I2C 16x2]
+    LCD --> |SDA A4| ARDUINO
+    LCD --> |SCL A5| ARDUINO
+    
+    %% 액추에이터
+    ARDUINO --> PUMP[워터펌프]
+    PUMP --> |A_1A Pin 10| ARDUINO
+    PUMP --> |A_1B Pin 9| ARDUINO
+    
+    ARDUINO --> FAN[팬]
+    FAN --> |B_1A Pin 5| ARDUINO
+    FAN --> |B_1B Pin 6| ARDUINO
+    
+    ARDUINO --> LED[LED]
+    LED --> |Pin 3| ARDUINO
+    
+    %% 통신 모듈
+    ARDUINO --> ESP8266[ESP8266 WiFi 모듈]
+    ESP8266 --> |RX Pin 12| ARDUINO
+    ESP8266 --> |TX Pin 13| ARDUINO
+    
+    %% 전원 연결
+    PWR --> DHT11
+    PWR --> SOIL
+    PWR --> LIGHT
+    PWR --> LCD
+    PWR --> ESP8266
+    
+    GND --> DHT11
+    GND --> SOIL
+    GND --> LIGHT
+    GND --> LCD
+    GND --> ESP8266
+    GND --> PUMP
+    GND --> FAN
+    GND --> LED
+</div></code></pre>
+<h2 id="%EC%83%81%EC%84%B8-%ED%95%80-%EC%97%B0%EA%B2%B0%ED%91%9C">상세 핀 연결표</h2>
+<table>
+<thead>
+<tr>
+<th>구성요소</th>
+<th>핀 번호</th>
+<th>Arduino 핀</th>
+<th>기능</th>
+<th>Pull-up/Pull-down</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>센서</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>DHT11</td>
+<td>VCC</td>
+<td>5V</td>
+<td>전원</td>
+<td>-</td>
+</tr>
+<tr>
+<td>DHT11</td>
+<td>GND</td>
+<td>GND</td>
+<td>그라운드</td>
+<td>-</td>
+</tr>
+<tr>
+<td>DHT11</td>
+<td>Data</td>
+<td>Pin 4</td>
+<td>데이터 신호</td>
+<td><strong>Pull-up 4.7kΩ</strong></td>
+</tr>
+<tr>
+<td>토양수분센서</td>
+<td>VCC</td>
+<td>5V</td>
+<td>전원</td>
+<td>-</td>
+</tr>
+<tr>
+<td>토양수분센서</td>
+<td>GND</td>
+<td>GND</td>
+<td>그라운드</td>
+<td>-</td>
+</tr>
+<tr>
+<td>토양수분센서</td>
+<td>Signal</td>
+<td>A0</td>
+<td>아날로그 입력</td>
+<td><strong>Pull-down 10kΩ</strong></td>
+</tr>
+<tr>
+<td>조도센서</td>
+<td>VCC</td>
+<td>5V</td>
+<td>전원</td>
+<td>-</td>
+</tr>
+<tr>
+<td>조도센서</td>
+<td>GND</td>
+<td>GND</td>
+<td>그라운드</td>
+<td>-</td>
+</tr>
+<tr>
+<td>조도센서</td>
+<td>Signal</td>
+<td>A1</td>
+<td>아날로그 입력</td>
+<td><strong>Pull-down 10kΩ</strong></td>
+</tr>
+<tr>
+<td><strong>디스플레이</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>LCD I2C</td>
+<td>VCC</td>
+<td>5V</td>
+<td>전원</td>
+<td>-</td>
+</tr>
+<tr>
+<td>LCD I2C</td>
+<td>GND</td>
+<td>GND</td>
+<td>그라운드</td>
+<td>-</td>
+</tr>
+<tr>
+<td>LCD I2C</td>
+<td>SDA</td>
+<td>A4</td>
+<td>I2C 데이터</td>
+<td><strong>Pull-up 4.7kΩ</strong></td>
+</tr>
+<tr>
+<td>LCD I2C</td>
+<td>SCL</td>
+<td>A5</td>
+<td>I2C 클럭</td>
+<td><strong>Pull-up 4.7kΩ</strong></td>
+</tr>
+<tr>
+<td><strong>액추에이터</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>워터펌프</td>
+<td>A_1A</td>
+<td>Pin 10</td>
+<td>모터 제어 A</td>
+<td>-</td>
+</tr>
+<tr>
+<td>워터펌프</td>
+<td>A_1B</td>
+<td>Pin 9</td>
+<td>모터 제어 B</td>
+<td>-</td>
+</tr>
+<tr>
+<td>팬</td>
+<td>B_1A</td>
+<td>Pin 5</td>
+<td>모터 제어 A</td>
+<td>-</td>
+</tr>
+<tr>
+<td>팬</td>
+<td>B_1B</td>
+<td>Pin 6</td>
+<td>모터 제어 B</td>
+<td>-</td>
+</tr>
+<tr>
+<td>LED</td>
+<td>+</td>
+<td>Pin 3</td>
+<td>PWM 제어</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>통신</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>ESP8266</td>
+<td>VCC</td>
+<td>3.3V</td>
+<td>전원</td>
+<td>-</td>
+</tr>
+<tr>
+<td>ESP8266</td>
+<td>GND</td>
+<td>GND</td>
+<td>그라운드</td>
+<td>-</td>
+</tr>
+<tr>
+<td>ESP8266</td>
+<td>TX</td>
+<td>Pin 12</td>
+<td>시리얼 송신</td>
+<td>-</td>
+</tr>
+<tr>
+<td>ESP8266</td>
+<td>RX</td>
+<td>Pin 13</td>
+<td>시리얼 수신</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h2 id="%EC%8B%9C%EC%8A%A4%ED%85%9C-%EB%8F%99%EC%9E%91-%ED%9D%90%EB%A6%84">시스템 동작 흐름</h2>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart TD
+    START[시스템 시작] --> INIT[센서 초기화]
+    INIT --> READ[센서 데이터 읽기]
+    READ --> DISPLAY[LCD 표시]
+    DISPLAY --> CHECK{임계값 확인}
+    
+    CHECK --> |토양수분 < 임계값| PUMP_ON[펌프 작동]
+    CHECK --> |온도/습도 > 임계값| FAN_ON[팬 작동]
+    CHECK --> |조도 < 임계값| LED_ON[LED 켜기]
+    CHECK --> |모든 값 정상| WAIT[대기]
+    
+    PUMP_ON --> SEND[데이터 전송]
+    FAN_ON --> SEND
+    LED_ON --> SEND
+    WAIT --> SEND
+    
+    SEND --> |시리얼 통신| ESP8266[ESP8266 모듈]
+    ESP8266 --> |WiFi| CLOUD[Supabase 클라우드]
+    SEND --> DELAY[1초 대기]
+    DELAY --> READ
+</div></code></pre>
+<h2 id="pull-uppull-down-%EC%A0%80%ED%95%AD-%EC%83%81%EC%84%B8-%EC%84%A4%EB%AA%85">Pull-up/Pull-down 저항 상세 설명</h2>
+<h3 id="1-dht11-%EC%98%A8%EC%8A%B5%EB%8F%84-%EC%84%BC%EC%84%9C">1. <strong>DHT11 온습도 센서</strong></h3>
+<ul>
+<li><strong>Pull-up 저항</strong>: 4.7kΩ (VCC와 Data 핀 사이)</li>
+<li><strong>목적</strong>: 디지털 신호의 안정성 확보, 플로팅 상태 방지</li>
+<li><strong>연결</strong>: VCC(5V) → 4.7kΩ 저항 → Data 핀(Pin 4)</li>
+</ul>
+<h3 id="2-%ED%86%A0%EC%96%91%EC%88%98%EB%B6%84-%EC%84%BC%EC%84%9C">2. <strong>토양수분 센서</strong></h3>
+<ul>
+<li><strong>Pull-down 저항</strong>: 10kΩ (Signal 핀과 GND 사이)</li>
+<li><strong>목적</strong>: 센서가 연결되지 않았을 때 0V로 안정화</li>
+<li><strong>연결</strong>: Signal 핀(A0) → 10kΩ 저항 → GND</li>
+</ul>
+<h3 id="3-%EC%A1%B0%EB%8F%84-%EC%84%BC%EC%84%9C-cds">3. <strong>조도 센서 (CDS)</strong></h3>
+<ul>
+<li><strong>Pull-down 저항</strong>: 10kΩ (Signal 핀과 GND 사이)</li>
+<li><strong>목적</strong>: 어두운 환경에서 0V로 안정화</li>
+<li><strong>연결</strong>: Signal 핀(A1) → 10kΩ 저항 → GND</li>
+</ul>
+<h3 id="4-lcd-i2c-%ED%86%B5%EC%8B%A0">4. <strong>LCD I2C 통신</strong></h3>
+<ul>
+<li><strong>Pull-up 저항</strong>: 4.7kΩ (SDA, SCL 각각)</li>
+<li><strong>목적</strong>: I2C 버스의 HIGH 상태 유지, 통신 안정성</li>
+<li><strong>연결</strong>:
+<ul>
+<li>SDA(A4) → 4.7kΩ 저항 → VCC(5V)</li>
+<li>SCL(A5) → 4.7kΩ 저항 → VCC(5V)</li>
+</ul>
+</li>
+</ul>
+<h2 id="%ED%9A%8C%EB%A1%9C%EB%8F%84-pull-uppull-down-%ED%8F%AC%ED%95%A8">회로도 (Pull-up/Pull-down 포함)</h2>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    %% 전원 공급
+    PWR[5V 전원] --> ARDUINO[Arduino Uno]
+    GND[GND] --> ARDUINO
+    
+    %% 센서 연결 (Pull-up/Pull-down 포함)
+    ARDUINO --> DHT11[DHT11 온습도센서]
+    DHT11 --> |Pin 4| ARDUINO
+    PWR --> |4.7kΩ Pull-up| DHT11
+    
+    ARDUINO --> SOIL[토양수분센서]
+    SOIL --> |A0| ARDUINO
+    SOIL --> |10kΩ Pull-down| GND
+    
+    ARDUINO --> LIGHT[조도센서]
+    LIGHT --> |A1| ARDUINO
+    LIGHT --> |10kΩ Pull-down| GND
+    
+    %% 디스플레이 (I2C Pull-up)
+    ARDUINO --> LCD[LCD I2C 16x2]
+    LCD --> |SDA A4| ARDUINO
+    LCD --> |SCL A5| ARDUINO
+    PWR --> |4.7kΩ Pull-up| LCD
+    
+    %% 액추에이터
+    ARDUINO --> PUMP[워터펌프]
+    PUMP --> |A_1A Pin 10| ARDUINO
+    PUMP --> |A_1B Pin 9| ARDUINO
+    
+    ARDUINO --> FAN[팬]
+    FAN --> |B_1A Pin 5| ARDUINO
+    FAN --> |B_1B Pin 6| ARDUINO
+    
+    ARDUINO --> LED[LED]
+    LED --> |Pin 3| ARDUINO
+    
+    %% 통신 모듈
+    ARDUINO --> ESP8266[ESP8266 WiFi 모듈]
+    ESP8266 --> |RX Pin 12| ARDUINO
+    ESP8266 --> |TX Pin 13| ARDUINO
+    
+    %% 전원 연결
+    PWR --> DHT11
+    PWR --> SOIL
+    PWR --> LIGHT
+    PWR --> LCD
+    PWR --> ESP8266
+    
+    GND --> DHT11
+    GND --> SOIL
+    GND --> LIGHT
+    GND --> LCD
+    GND --> ESP8266
+    GND --> PUMP
+    GND --> FAN
+    GND --> LED
+</div></code></pre>
+<h2 id="%EC%A3%BC%EC%9D%98%EC%82%AC%ED%95%AD">주의사항</h2>
+<ol>
+<li><strong>전원 공급</strong>: ESP8266은 3.3V로 동작하므로 전압 분압기나 레귤레이터 필요</li>
+<li><strong>모터 제어</strong>: 워터펌프와 팬은 고전류를 소모하므로 릴레이나 모터 드라이버 사용 권장</li>
+<li><strong>I2C 통신</strong>: LCD와 다른 I2C 장치가 충돌하지 않도록 주소 확인 필요</li>
+<li><strong>시리얼 통신</strong>: ESP8266과의 통신 시 전압 레벨 매칭 필요</li>
+<li><strong>Pull-up/Pull-down 저항</strong>:
+<ul>
+<li>저항값이 너무 작으면 전류 소모 증가</li>
+<li>저항값이 너무 크면 신호 무결성 문제 발생</li>
+<li>권장값: Pull-up 4.7kΩ, Pull-down 10kΩ</li>
+</ul>
+</li>
+</ol>
+<h2 id="%ED%99%95%EC%9E%A5-%EA%B0%80%EB%8A%A5%EC%84%B1">확장 가능성</h2>
+<ul>
+<li>추가 센서 연결 (pH 센서, EC 센서 등)</li>
+<li>카메라 모듈 추가</li>
+<li>블루투스 통신 추가</li>
+<li>SD 카드 데이터 로깅</li>
+<li>실시간 알림 시스템</li>
+</ul>
+
+</body>
+</html>

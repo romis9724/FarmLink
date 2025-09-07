@@ -1,6 +1,6 @@
 # Farm Link Admin Dashboard
 
-Farm Link 프로젝트의 관리자 대시보드입니다. Material-UI와 React를 사용하여 구축되었습니다.
+Farm Link 프로젝트의 관리자 대시보드입니다. React를 사용하여 구축되었습니다.
 
 ## 기능
 
@@ -41,9 +41,9 @@ Farm Link 프로젝트의 관리자 대시보드입니다. Material-UI와 React�
 ## 기술 스택
 
 - **Frontend**: React 18, TypeScript
-- **UI Framework**: Material-UI (MUI) v5
+- **UI Framework**: React UI Components
 - **Charts**: Recharts
-- **Data Grid**: MUI X Data Grid
+- **Data Grid**: React Data Grid
 - **Database**: Supabase
 - **Routing**: React Router v6
 
@@ -114,7 +114,7 @@ src/
 
 ### 반응형 디자인
 - 모바일, 태블릿, 데스크톱 지원
-- Material-UI의 반응형 그리드 시스템 사용
+- React의 반응형 그리드 시스템 사용
 
 ### 데이터 시각화
 - Recharts를 사용한 인터랙티브 차트

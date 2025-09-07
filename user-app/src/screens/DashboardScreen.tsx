@@ -86,6 +86,7 @@ const DashboardScreen: React.FC = () => {
               type="moisture"
               deviceId="farmlink-001"
               refreshInterval={5000}
+              iconColor="#1877F2"
             />
           </View>
           
@@ -98,6 +99,7 @@ const DashboardScreen: React.FC = () => {
               type="temperature"
               deviceId="farmlink-001"
               refreshInterval={5000}
+              iconColor="#FFAB00"
             />
           </View>
           
@@ -110,6 +112,7 @@ const DashboardScreen: React.FC = () => {
               type="humidity"
               deviceId="farmlink-001"
               refreshInterval={5000}
+              iconColor="#00B8D9"
             />
           </View>
           
@@ -122,6 +125,7 @@ const DashboardScreen: React.FC = () => {
               type="light"
               deviceId="farmlink-001"
               refreshInterval={5000}
+              iconColor="#FFAB00"
             />
           </View>
         </View>

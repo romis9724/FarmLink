@@ -18,6 +18,7 @@ interface SensorCardProps {
   type: 'moisture' | 'temperature' | 'humidity' | 'light';
   deviceId: string;
   refreshInterval?: number;
+  iconColor?: string;
 }
 
 const SensorCard: React.FC<SensorCardProps> = ({
@@ -28,6 +29,7 @@ const SensorCard: React.FC<SensorCardProps> = ({
   type,
   deviceId,
   refreshInterval = 5000,
+  iconColor,
 }) => {
   const [sensorData, setSensorData] = useState<SensorData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -37,13 +39,13 @@ const SensorCard: React.FC<SensorCardProps> = ({
   const getStatusColor = (value: number, type: string): 'success' | 'warning' | 'error' => {
     switch (type) {
       case 'moisture':
-        return value < 20 ? 'error' : value < 50 ? 'warning' : 'success';
+        return value < 20 ? 'error' : value < 40 ? 'warning' : 'success';
       case 'temperature':
-        return value > 35 ? 'error' : value > 30 ? 'warning' : 'success';
+        return value > 30 ? 'error' : value > 25 ? 'warning' : 'success';
       case 'humidity':
-        return value > 80 ? 'error' : value > 70 ? 'warning' : 'success';
+        return value > 70 ? 'error' : value > 50 ? 'warning' : 'success';
       case 'light':
-        return value > 80 ? 'error' : value > 60 ? 'warning' : 'success';
+        return value < 30 ? 'error' : value < 50 ? 'warning' : 'success';
       default:
         return 'success';
     }
@@ -52,13 +54,13 @@ const SensorCard: React.FC<SensorCardProps> = ({
   const getStatusText = (value: number, type: string): string => {
     switch (type) {
       case 'moisture':
-        return value < 20 ? '건조' : value < 50 ? '보통' : '적정';
+        return value < 20 ? '매우 건조' : value < 40 ? '건조' : '적정';
       case 'temperature':
-        return value > 35 ? '높음' : value > 30 ? '보통' : '적정';
+        return value > 30 ? '높음' : value > 25 ? '보통' : '적정';
       case 'humidity':
-        return value > 80 ? '높음' : value > 70 ? '보통' : '적정';
+        return value > 70 ? '높음' : value > 50 ? '보통' : '적정';
       case 'light':
-        return value > 80 ? '강함' : value > 60 ? '보통' : '적정';
+        return value < 30 ? '어둠' : value < 50 ? '보통' : '밝음';
       default:
         return '정상';
     }
@@ -96,21 +98,14 @@ const SensorCard: React.FC<SensorCardProps> = ({
   }, [fetchData, refreshInterval]);
 
   const getCardColor = () => {
-    if (loading || error) return '#f5f5f5';
-    
-    const value = sensorData?.[valueKey] as number;
-    if (typeof value !== 'number') return '#f5f5f5';
-    
-    const status = getStatusColor(value, type);
-    switch (status) {
-      case 'success': return '#e8f5e8';
-      case 'warning': return '#fff3cd';
-      case 'error': return '#f8d7da';
-      default: return '#f5f5f5';
-    }
+    // admin-dashboard와 동일하게 흰색 배경 고정
+    return '#ffffff';
   };
 
   const getIconColor = () => {
+    // admin-dashboard와 동일한 고정 색상 사용
+    if (iconColor) return iconColor;
+    
     if (loading || error) return '#666';
     
     const value = sensorData?.[valueKey] as number;
@@ -180,6 +175,9 @@ const SensorCard: React.FC<SensorCardProps> = ({
           <View style={styles.titleContainer}>
             <Icon name={icon} size={24} color={getIconColor()} />
             <Text style={styles.title}>{title}</Text>
+            {loading && (
+              <ActivityIndicator size="small" color="#1877F2" style={styles.loadingIndicator} />
+            )}
           </View>
         </View>
         {renderContent()}
@@ -191,24 +189,35 @@ const SensorCard: React.FC<SensorCardProps> = ({
 const styles = StyleSheet.create({
   card: {
     margin: 0,
-    elevation: 4,
-    borderRadius: 12,
+    elevation: 2,
+    borderRadius: 8,
+    // admin-dashboard와 동일한 호버 효과
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   cardContent: {
     padding: 16,
   },
   header: {
-    marginBottom: 12,
+    marginBottom: 16,
   },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   title: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '600',
     marginLeft: 8,
     color: '#333',
+  },
+  loadingIndicator: {
+    marginLeft: 8,
   },
   content: {
     alignItems: 'center',
@@ -219,12 +228,12 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   value: {
-    fontSize: 32,
+    fontSize: 36,
     fontWeight: 'bold',
     color: '#1877F2',
   },
   unit: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#666',
     marginLeft: 4,
   },

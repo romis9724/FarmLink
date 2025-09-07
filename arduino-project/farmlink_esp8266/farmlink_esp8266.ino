@@ -46,10 +46,10 @@ int ledval;
 float h, t;
 
 // 임계치 설정 변수 (동적 설정 가능)
-float temperature_threshold = 35.0;
+float temperature_threshold = 25.0;
 float humidity_threshold = 70.0;
-int soil_moisture_threshold = 80;
-int light_intensity_threshold = 90;
+int soil_moisture_threshold = 70;
+int light_intensity_threshold = 50;
 String config_name = "기본 설정";
 
 
@@ -227,7 +227,7 @@ void controlFan() {
 }
 
 void controlLED() {
-  if (ledval > light_intensity_threshold) {
+  if (ledval < light_intensity_threshold) {
     analogWrite(cds_ledpin, ledval);
     mySerial.println("LED 켜짐! 조도: " + String(ledval));
   } else {
@@ -353,16 +353,20 @@ void sendDataToSerial() {
 
 // 시리얼로부터 임계치 설정 수신 함수
 void checkSerialForThresholds() {
-  if (mySerial.available()) {
-    String input = mySerial.readStringUntil('/');
+  // Serial.println(1);
+//  if (Serial.available()) {
+  // Serial.println(2);
+    String input = Serial.readStringUntil("/");
     input.trim();
+    // input = "M:50,D:100,T:30,H:70//";
     
     // "//"로 끝나는 임계치 설정 데이터인지 확인
     if (input.length() > 0) {
+  // Serial.println(3);
       mySerial.println("수신된 임계치 데이터: " + input);
       parseThresholdData(input);
     }
-  }
+//  }
 }
 
 // 임계치 설정 데이터 파싱 함수

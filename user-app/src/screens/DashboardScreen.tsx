@@ -7,21 +7,9 @@ import {
   RefreshControl,
   Alert,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Card, Chip, FAB } from 'react-native-paper';
-// 웹에서는 간단한 텍스트 아이콘 사용
-const Icon = ({ name, size = 24, color = '#666' }) => {
-  const iconMap = {
-    'eco': '🌱',
-    'device-hub': '📱',
-    'device-unknown': '❓',
-    'refresh': '🔄',
-  };
-  return (
-    <span style={{ fontSize: size, color }}>
-      {iconMap[name] || '📊'}
-    </span>
-  );
-};
+import Icon from '../components/Icon';
 import { FarmLinkAPI, Device } from '../lib/api';
 import SensorCard from '../components/SensorCard';
 
@@ -65,7 +53,7 @@ const DashboardScreen: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top']}>
       <ScrollView
         style={styles.scrollView}
         refreshControl={
@@ -89,45 +77,53 @@ const DashboardScreen: React.FC = () => {
 
         {/* 센서 데이터 카드들 */}
         <View style={styles.sensorGrid}>
-          <SensorCard
-            title="토양 수분"
-            icon="water-drop"
-            valueKey="soil_moisture"
-            unit="%"
-            type="moisture"
-            deviceId="farmlink-001"
-            refreshInterval={5000}
-          />
+          <View style={styles.sensorCardWrapper}>
+            <SensorCard
+              title="토양 수분"
+              icon="water-drop"
+              valueKey="soil_moisture"
+              unit="%"
+              type="moisture"
+              deviceId="farmlink-001"
+              refreshInterval={5000}
+            />
+          </View>
           
-          <SensorCard
-            title="온도"
-            icon="thermostat"
-            valueKey="temperature"
-            unit="°C"
-            type="temperature"
-            deviceId="farmlink-001"
-            refreshInterval={5000}
-          />
+          <View style={styles.sensorCardWrapper}>
+            <SensorCard
+              title="온도"
+              icon="thermostat"
+              valueKey="temperature"
+              unit="°C"
+              type="temperature"
+              deviceId="farmlink-001"
+              refreshInterval={5000}
+            />
+          </View>
           
-          <SensorCard
-            title="습도"
-            icon="air"
-            valueKey="humidity"
-            unit="%"
-            type="humidity"
-            deviceId="farmlink-001"
-            refreshInterval={5000}
-          />
+          <View style={styles.sensorCardWrapper}>
+            <SensorCard
+              title="습도"
+              icon="air"
+              valueKey="humidity"
+              unit="%"
+              type="humidity"
+              deviceId="farmlink-001"
+              refreshInterval={5000}
+            />
+          </View>
           
-          <SensorCard
-            title="조도"
-            icon="light-mode"
-            valueKey="light_intensity"
-            unit="ph"
-            type="light"
-            deviceId="farmlink-001"
-            refreshInterval={5000}
-          />
+          <View style={styles.sensorCardWrapper}>
+            <SensorCard
+              title="조도"
+              icon="light-mode"
+              valueKey="light_intensity"
+              unit="ph"
+              type="light"
+              deviceId="farmlink-001"
+              refreshInterval={5000}
+            />
+          </View>
         </View>
 
         {/* 디바이스 상태 */}
@@ -172,14 +168,14 @@ const DashboardScreen: React.FC = () => {
         <View style={styles.bottomSpacer} />
       </ScrollView>
 
-      {/* 새로고침 FAB */}
+        {/* 새로고침 FAB */}
       <FAB
         style={styles.fab}
-        icon="refresh"
+        icon={() => <Icon name="refresh" size={24} color="#fff" />}
         onPress={onRefresh}
         disabled={refreshing}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -187,6 +183,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f8fafc',
+    paddingBottom: 60, // 탭바 높이만큼 하단 여백
   },
   scrollView: {
     flex: 1,
@@ -197,10 +194,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 16,
     elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
   },
   headerContent: {
     flexDirection: 'row',
@@ -234,6 +228,13 @@ const styles = StyleSheet.create({
   },
   sensorGrid: {
     padding: 16,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  sensorCardWrapper: {
+    width: '48%',
+    marginBottom: 16,
   },
   deviceCard: {
     margin: 16,
@@ -289,13 +290,13 @@ const styles = StyleSheet.create({
     color: '#999',
   },
   bottomSpacer: {
-    height: 80,
+    height: 20,
   },
   fab: {
     position: 'absolute',
     margin: 16,
     right: 0,
-    bottom: 0,
+    bottom: 80, // 탭 네비게이션 위에 위치하도록 조정
     backgroundColor: '#1877F2',
   },
 });

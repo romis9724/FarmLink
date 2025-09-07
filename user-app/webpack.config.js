@@ -15,24 +15,29 @@ module.exports = {
       'react-native-vector-icons': 'react-native-vector-icons/dist',
       '@react-native-vector-icons/material-design-icons': 'react-native-vector-icons/dist/MaterialIcons',
       '@react-native-vector-icons/material-community-icons': 'react-native-vector-icons/dist/MaterialCommunityIcons',
+      '@expo/vector-icons': 'react-native-vector-icons/dist',
     },
+    fallback: {
+      "process": require.resolve("process/browser")
+    }
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx|ts|tsx)$/,
-        exclude: /node_modules\/(?!react-native-vector-icons)/,
+        exclude: /node_modules\/(?!(react-native-vector-icons|@expo\/vector-icons))/,
         use: {
           loader: 'babel-loader',
           options: {
             presets: [
-              ['@babel/preset-env', { targets: { browsers: ['last 2 versions'] } }],
-              ['@babel/preset-react', { runtime: 'automatic' }],
+              ['@babel/preset-env', { 
+                targets: { browsers: ['last 2 versions'] }
+              }],
+              ['@babel/preset-react', { runtime: 'classic' }],
               '@babel/preset-typescript',
             ],
             plugins: [
               '@babel/plugin-proposal-class-properties',
-              '@babel/plugin-transform-runtime',
             ],
           },
         },
@@ -56,6 +61,10 @@ module.exports = {
             outputPath: 'fonts/',
           },
         },
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },

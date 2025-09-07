@@ -7,21 +7,7 @@ import {
   Animated,
 } from 'react-native';
 import { Card, Chip } from 'react-native-paper';
-// 웹에서는 간단한 텍스트 아이콘 사용
-const Icon = ({ name, size = 24, color = '#666' }) => {
-  const iconMap = {
-    'water-drop': '💧',
-    'thermostat': '🌡️',
-    'air': '💨',
-    'light-mode': '☀️',
-    'error-outline': '❌',
-  };
-  return (
-    <span style={{ fontSize: size, color }}>
-      {iconMap[name] || '📊'}
-    </span>
-  );
-};
+import Icon from './Icon';
 import { FarmLinkAPI, SensorData } from '../lib/api';
 
 interface SensorCardProps {
@@ -204,7 +190,7 @@ const SensorCard: React.FC<SensorCardProps> = ({
 
 const styles = StyleSheet.create({
   card: {
-    margin: 8,
+    margin: 0,
     elevation: 4,
     borderRadius: 12,
   },
